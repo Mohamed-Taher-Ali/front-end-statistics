@@ -1,0 +1,18 @@
+just type yarn
+then npm start
+
+focused points as possible ::
+    scratching
+    IOC > Inversion Of Control
+    dependency injection
+    SOLID principles [as possible]
+    prototyping
+    generic components
+    custom hooks
+    container pattern
+    interface segregation
+    caching for expensive computations
+    high reusability
+    single truth sourcing.
+
+console.log("thank you so much :) ");
