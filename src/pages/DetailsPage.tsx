@@ -15,18 +15,18 @@ export default function DetailsPage() {
                 {
                     data.map(d => (
                         <div
-                        key={d.id}
-                        className='details-out-box'
-                        style={{
-                            backgroundColor: state.colorMode.currentMode.secondaryColor,
-                            color: state.colorMode.currentMode.fontColor
-                        }}
+                            key={d.id}
+                            className='details-out-box'
+                            style={{
+                                backgroundColor: state.colorMode.currentMode.secondaryColor,
+                                color: state.colorMode.currentMode.fontColor
+                            }}
                         >
                             {
                                 Object.keys(d).map(dd => (
                                     <div key={dd} className='details-inner-box'>
-                                    <div>{dd}</div>
-                                    <div>{d[dd as keyof IData]}</div>
+                                        <div>{dd}</div>
+                                        <div>{d[dd as keyof IData]}</div>
                                     </div>
                                 ))
                             }

@@ -17,7 +17,7 @@ export const fetchData = createAsyncThunk(
     async (arg, thunkAPI) => {
         const state = thunkAPI.getState() as IRootState;
 
-        if(state.dataStore.data.length)
+        if (state.dataStore.data.length)
             return state.dataStore.data;
 
         const response = await getData();
@@ -41,7 +41,7 @@ const dataSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchData.fulfilled, (state, action) => {
-            if(!state.data.length)
+            if (!state.data.length)
                 state.data.push(...action.payload)
         });
     },

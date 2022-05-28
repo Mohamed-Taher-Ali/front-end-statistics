@@ -95,7 +95,7 @@ const filterDataWithAccumulateLessons = ({
 
 const manipulateChartData = ({
     data, filter, activeSchools
-}: IDataState & {activeSchools: string[]}) => {
+}: IDataState & { activeSchools: string[] }) => {
     const schoolLessonsArr: (Partial<IData> & { isActive: boolean })[] = [];
     let monthlyLessonsArr: IMonthlyLessonsCount[] = [];
 

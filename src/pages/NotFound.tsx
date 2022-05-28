@@ -7,10 +7,10 @@ export default function NotFoundPage() {
     return (
         <div className='page-cont'>
             <div
-            style={{
-                fontSize: '30px',
-                color: state.colorMode.currentMode.fontColor
-            }}
+                style={{
+                    fontSize: '30px',
+                    color: state.colorMode.currentMode.fontColor
+                }}
             >Oooops Not Found !</div>
         </div>
     )

@@ -1,15 +1,15 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Bullet } from 'src/components/Bullet';
-import { DropDown } from 'src/components/DropDown';
-import { ListItem } from 'src/components/ListItem';
-import MyChart from 'src/components/MyChart';
-import { IDataFilter } from 'src/config/types';
+import useQueryParamsToUpdateFilter from 'src/hooks/useQueryParamsToUpdateFilter';
 import useConfigureData from 'src/hooks/useConfigureData';
 import useDropDownData from 'src/hooks/useDropDownData';
-import useQueryParamsToUpdateFilter from 'src/hooks/useQueryParamsToUpdateFilter';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateFilter } from 'src/store/slices/data';
+import { ListItem } from 'src/components/ListItem';
+import { DropDown } from 'src/components/DropDown';
+import { useNavigate } from 'react-router-dom';
+import { Bullet } from 'src/components/Bullet';
+import { IDataFilter } from 'src/config/types';
+import MyChart from 'src/components/MyChart';
 import { IRootState } from 'src/store/types';
 
 
@@ -21,8 +21,8 @@ export default function MainPaige() {
     const { setSearchParams, activeSchools, setActiveSchools } = useQueryParamsToUpdateFilter();
     const { drawableData, mapSchoolToLessons, colors } = useConfigureData();
 
-    
-    const applyItemToDropDownList = (key : keyof IDataFilter) => ({
+
+    const applyItemToDropDownList = (key: keyof IDataFilter) => ({
         titleColor: state.colorMode.currentMode.fontColor,
         selectedValue: state.dataStore.filter[key],
         items: createDropDownData(key),
@@ -46,13 +46,13 @@ export default function MainPaige() {
                             const updated = { [name]: item.id ? item.value : '', };
                             dispatch(updateFilter(updated));
                             setSearchParams(
-                                { 
-                                ...state.dataStore.filter,
-                                activeSchools: activeSchools.join(','),
-                                ...updated
-                            }, 
+                                {
+                                    ...state.dataStore.filter,
+                                    activeSchools: activeSchools.join(','),
+                                    ...updated
+                                },
                                 { replace: true }
-                                );
+                            );
                         }}
                     />
                 </div>

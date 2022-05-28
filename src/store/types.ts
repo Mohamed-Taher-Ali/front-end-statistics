@@ -15,8 +15,6 @@ export interface IColorModeState {
 
 export type ColorModeType = 'light' | 'dark';
 
-
-
 export interface IDataState {
   filter: IDataFilter;
   data: IData[];

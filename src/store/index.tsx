@@ -3,11 +3,11 @@ import colorModeReducer from './slices/colorMode';
 import dataReducer from './slices/data';
 
 export const store = configureStore({
-    reducer: {
-        colorMode: colorModeReducer,
-        dataStore: dataReducer,
-    },
-    middleware: (getDefaultMiddleware) =>
+  reducer: {
+    colorMode: colorModeReducer,
+    dataStore: dataReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredPaths: ['beOverrides'],
@@ -15,9 +15,3 @@ export const store = configureStore({
       },
     }),
 });
-
-// (getDefaultMiddleware) => {
-//     return getDefaultMiddleware({
-//       serializableCheck: false
-//     });
-// }

@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { updateColorMode } from '../store/slices/colorMode';
 import { IRootState } from 'src/store/types';
- 
-export function useLightDarkMode () {
+
+export function useLightDarkMode() {
   const state = useSelector(s => s as IRootState);
   const dispatch = useDispatch();
 
@@ -14,14 +14,14 @@ export function useLightDarkMode () {
   const onToggle = () => {
     dispatch(updateColorMode(
       state.colorMode.currentMode.mode === 'dark'
-      ? "light"
-      : "dark"
+        ? "light"
+        : "dark"
     ));
   }
 
-    return ({
-      onToggle,
-      modesLabel,
-      mode: state.colorMode.currentMode.mode,
-    })
+  return ({
+    onToggle,
+    modesLabel,
+    mode: state.colorMode.currentMode.mode,
+  })
 }

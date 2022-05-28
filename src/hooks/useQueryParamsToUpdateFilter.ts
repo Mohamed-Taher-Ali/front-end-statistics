@@ -10,8 +10,8 @@ export default function useQueryParamsToUpdateFilter() {
     const [activeSchools, setActiveSchools] = useState<string[]>([]);
     const state = useSelector(s => s as IRootState)
     const dispatch = useDispatch();
-    
-    useEffect(() => { 
+
+    useEffect(() => {
         const params = new URLSearchParams(window.location.search);
 
         const activeSchools = params.get('activeSchools')?.split(',') || [];
@@ -21,17 +21,17 @@ export default function useQueryParamsToUpdateFilter() {
 
         dispatch(updateFilter({ camp, country, school }));
         setActiveSchools(activeSchools);
-     }, []);
+    }, []);
 
-     useEffect(()=>{
-         if(!activeSchools.length) return;
-         console.log(activeSchools);
-         
-         setSearchParams({
+    useEffect(() => {
+        if (!activeSchools.length) return;
+        console.log(activeSchools);
+
+        setSearchParams({
             ...state.dataStore.filter,
             activeSchools: `${activeSchools.join(',')}`
-         })
-     }, [activeSchools])
+        })
+    }, [activeSchools])
 
-     return { setSearchParams, activeSchools, setActiveSchools };
+    return { setSearchParams, activeSchools, setActiveSchools };
 }

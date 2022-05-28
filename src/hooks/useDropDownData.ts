@@ -9,8 +9,8 @@ export default function useDropDownData() {
     const createDropDownData = (key: keyof IDataFilter) => {
         let data = state.dataStore.data.map(d => d[key]);
         data = ['show all', ...new Set(data)];
-        return data.map((value, id) => ({id, value}))
+        return data.map((value, id) => ({ id, value }))
     }
 
-    return {createDropDownData};
+    return { createDropDownData };
 }

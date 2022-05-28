@@ -30,7 +30,7 @@ const colorModeSlice = createSlice({
             state: IColorModeState,
             action: PayloadAction<ColorModeType>
         ) => {
-            if(state.currentMode.mode !== action.payload)
+            if (state.currentMode.mode !== action.payload)
                 state.currentMode = colorModes[action.payload];
         }
     },
