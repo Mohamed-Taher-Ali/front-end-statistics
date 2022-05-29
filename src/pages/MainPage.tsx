@@ -25,12 +25,6 @@ export default function MainPaige() {
     const { setSearchParams, activeSchools, setActiveSchools, getQueryParam } = useQueryParamsToUpdateFilter();
 
 
-    console.log({
-        aaaaaaaaaaaaaaaaaaaa: state.dataStore.data.filter(a => a.country === 'Kenya' && a.camp === 'Kakuma' && a.school === 'Greenlight')
-        .reduce((ac, el) => ac + el.lessons, 0)
-    });
-    
-
     const applyItemToDropDownList = (
         key: keyof IDataFilter,
         showAllLabel?: showAllLabelEnum
