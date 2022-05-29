@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useQueryParamsToUpdateFilter from 'src/hooks/useQueryParamsToUpdateFilter';
+import useDropDownData, { showAllLabelEnum } from 'src/hooks/useDropDownData';
 import useConfigureData from 'src/hooks/useConfigureData';
-import useDropDownData from 'src/hooks/useDropDownData';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFilter } from 'src/store/slices/data';
 import { ListItem } from 'src/components/ListItem';
@@ -11,6 +11,7 @@ import { Bullet } from 'src/components/Bullet';
 import { IDataFilter } from 'src/config/types';
 import MyChart from 'src/components/MyChart';
 import { IRootState } from 'src/store/types';
+import { DropDownItemProps } from 'src/components/DropDown/types';
 
 
 export default function MainPaige() {
@@ -18,17 +19,64 @@ export default function MainPaige() {
     const dispatch = useDispatch();
     const state = useSelector(s => s as IRootState);
     const { createDropDownData } = useDropDownData();
-    const { setSearchParams, activeSchools, setActiveSchools } = useQueryParamsToUpdateFilter();
     const { drawableData, mapSchoolToLessons, colors } = useConfigureData();
+    const [schoolDDData, setSchoolDDData] = useState<DropDownItemProps[]>([]);
+    const [schoolDDSelectedValue, setSchoolDDSelectedValue] = useState(state.dataStore.filter['school']);
+    const { setSearchParams, activeSchools, setActiveSchools, getQueryParam } = useQueryParamsToUpdateFilter();
 
 
-    const applyItemToDropDownList = (key: keyof IDataFilter) => ({
+    console.log({
+        aaaaaaaaaaaaaaaaaaaa: state.dataStore.data.filter(a => a.country === 'Kenya' && a.camp === 'Kakuma' && a.school === 'Greenlight')
+        .reduce((ac, el) => ac + el.lessons, 0)
+    });
+    
+
+    const applyItemToDropDownList = (
+        key: keyof IDataFilter,
+        showAllLabel?: showAllLabelEnum
+    ) => ({
         titleColor: state.colorMode.currentMode.fontColor,
+        items: createDropDownData(key, showAllLabel),
         selectedValue: state.dataStore.filter[key],
-        items: createDropDownData(key),
         title: `select ${key}`,
         name: key,
     });
+
+    const onSelectDD = (name: string, item: DropDownItemProps) => {
+        const n = name as keyof IDataFilter;
+        const updated = { 
+            [name]: item.value !== showAllLabelEnum.SHOW_ALL ? item.value : '',
+            ...(n !== 'school' && {school: ''}),
+        };
+
+        dispatch(updateFilter(updated));
+        setSearchParams(
+            {
+                ...state.dataStore.filter,
+                ...updated,
+                activeSchools: activeSchools.join(','),
+            },
+            { replace: true }
+        );
+    }
+
+    useEffect(() => {
+        setSchoolDDData(
+            createDropDownData(
+                'school',
+                showAllLabelEnum.SHOW_ALL
+            )
+        );
+        setSchoolDDSelectedValue(
+            getQueryParam('school') ||
+            state.dataStore.filter.school ||
+            showAllLabelEnum.SHOW_ALL
+        )
+    },
+    [
+        state.dataStore.filter.country,
+        state.dataStore.filter.camp
+    ]);
 
 
     return (
@@ -39,20 +87,19 @@ export default function MainPaige() {
                         dropDowns={[
                             applyItemToDropDownList('country'),
                             applyItemToDropDownList('camp'),
-                            applyItemToDropDownList('school'),
+                            {
+                                titleColor: state.colorMode.currentMode.fontColor,
+                                onSelect: (item) => onSelectDD('school', item),
+                                selectedValue: schoolDDSelectedValue,
+                                title: `select ${'school'}`,
+                                items: schoolDDData,
+                                name: 'school',
+                            }
                         ]}
                         titleColor={state.colorMode.currentMode.fontColor}
                         onSelect={(name: string, item) => {
-                            const updated = { [name]: item.id ? item.value : '', };
-                            dispatch(updateFilter(updated));
-                            setSearchParams(
-                                {
-                                    ...state.dataStore.filter,
-                                    activeSchools: activeSchools.join(','),
-                                    ...updated
-                                },
-                                { replace: true }
-                            );
+                            setSchoolDDSelectedValue(item.value);
+                            onSelectDD(name, item)
                         }}
                     />
                 </div>
@@ -69,7 +116,8 @@ export default function MainPaige() {
                             schools={mapSchoolToLessons}
                             activeSchools={activeSchools}
                             onPointClick={(item) => {
-                                navigate(`/details/${item.dataKey}/${item.payload.month}`);
+                                const { camp, country } = state.dataStore.filter;
+                                navigate(`/details/${item.dataKey}/${camp}/${country}/${item.payload.month}`);
                             }}
                         />
                     </div>

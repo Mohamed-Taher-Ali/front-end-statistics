@@ -7,13 +7,13 @@ import { IRootState } from 'src/store/types';
 
 export default function useQueryParamsToUpdateFilter() {
     const [searchParams, setSearchParams] = useSearchParams();
+    const params = new URLSearchParams(window.location.search);
     const [activeSchools, setActiveSchools] = useState<string[]>([]);
     const state = useSelector(s => s as IRootState)
     const dispatch = useDispatch();
-
+    
+    
     useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-
         const activeSchools = params.get('activeSchools')?.split(',') || [];
         const country = params.get('country') || '';
         const school = params.get('school') || '';
@@ -23,9 +23,9 @@ export default function useQueryParamsToUpdateFilter() {
         setActiveSchools(activeSchools);
     }, []);
 
+
     useEffect(() => {
         if (!activeSchools.length) return;
-        console.log(activeSchools);
 
         setSearchParams({
             ...state.dataStore.filter,
@@ -33,5 +33,11 @@ export default function useQueryParamsToUpdateFilter() {
         })
     }, [activeSchools])
 
-    return { setSearchParams, activeSchools, setActiveSchools };
+
+    const getQueryParam = (param: string) => {
+        return params.get(param) || '';
+    }
+    
+
+    return { setSearchParams, activeSchools, setActiveSchools, getQueryParam };
 }

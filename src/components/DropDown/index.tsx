@@ -8,7 +8,7 @@ export function DropDown<T extends DropDownItemProps>({
   selectedValue,
   titleColor,
 }: DropDownProps<T>) {
-  const [defaultValue, setDefaultValue] = useState(
+  const [value, setValue] = useState(
     items.find(i=>i.value === selectedValue)?.value
   );
 
@@ -18,7 +18,7 @@ export function DropDown<T extends DropDownItemProps>({
   }
 
   useEffect(()=> {
-    setDefaultValue(
+    setValue(
       items.find(i=>i.value === selectedValue)?.value
     )
   }, [selectedValue])
@@ -34,7 +34,7 @@ export function DropDown<T extends DropDownItemProps>({
       }
       <select
         className='drop-down'
-        {...{...(defaultValue? { value: defaultValue }: {})}}
+        {...{...(value? { value }: {})}}
         onChange={(e)=> onClickHandler(e.target.value)}
       >
         {
