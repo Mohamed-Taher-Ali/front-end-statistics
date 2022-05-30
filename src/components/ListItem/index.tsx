@@ -26,7 +26,7 @@ export function ListItem<T extends Partial<IData>> ({
           }
         )
       )
-  }, [icon]);
+  }, [clr, icon]);
 
   const onClickHandler = (item: T) => {
     onClick && onClick(item);

@@ -11,7 +11,10 @@ export default function MyLayout() {
     const state = useSelector(s => s as IRootState);
     const dispatch = useDispatch<IRootDispatch>();
     
-    useEffect(()=>{ dispatch(fetchData()) }, []);
+    useEffect(()=>{ 
+        dispatch(fetchData())
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <MySuspense>

@@ -66,8 +66,8 @@ export default function MainPaige() {
                 getQueryParam('school') ||
                 state.dataStore.filter.school ||
                 showAllLabelEnum.SHOW_ALL
-            );
-        },
+            ); 
+        },// eslint-disable-next-line
         [
             state.dataStore.filter.country,
             state.dataStore.filter.camp

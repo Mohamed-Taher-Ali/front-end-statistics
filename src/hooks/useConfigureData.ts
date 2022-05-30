@@ -28,10 +28,13 @@ export default function useConfigureData() {
 
         setMapSchoolToLessons(schoolLessonsArr);
         setDrawableData(monthlyLessonsArr);
-
+        // eslint-disable-next-line
     }, [data, camp, country, school]);
 
-    useEffect(() => { generateChartData(); }, [data, camp, country, school]);
+    useEffect(() => { 
+        generateChartData();
+        // eslint-disable-next-line
+    }, [data, camp, country, school]);
     useEffect(() => { setColors(generateUniqueColors(data.length)); }, [data, country, camp]);
 
     return {

@@ -21,7 +21,7 @@ export function DropDown<T extends DropDownItemProps>({
     setValue(
       items.find(i=>i.value === selectedValue)?.value
     )
-  }, [selectedValue])
+  }, [items, selectedValue])
 
   return (
     <div className='drop-down-cont'>

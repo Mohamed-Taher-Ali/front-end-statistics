@@ -22,6 +22,7 @@ export default function useQueryParamsToUpdateFilter() {
 
         dispatch(updateFilter({ camp, country, school }));
         setActiveSchools(activeSchoolsParam);
+        // eslint-disable-next-line
     }, []);
 
 
@@ -32,6 +33,7 @@ export default function useQueryParamsToUpdateFilter() {
             ...state.dataStore.filter,
             activeSchools: `${activeSchools.join(',')}`
         })
+        // eslint-disable-next-line
     }, [activeSchools])
 
 

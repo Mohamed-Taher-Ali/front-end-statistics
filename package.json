@@ -1,37 +1,48 @@
 {
-  "name": "statistics",
+  "name": "f3",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@nivo/line": "^0.79.1",
+    "@commitlint/cli": "^17.0.1",
+    "@commitlint/config-conventional": "^17.0.0",
     "@reduxjs/toolkit": "^1.8.2",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.2.0",
+    "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.1",
     "@types/node": "^16.11.36",
     "@types/react": "^18.0.9",
-    "@types/react-dom": "^18.0.4",
+    "@types/react-dom": "^18.0.5",
+    "@types/react-redux": "^7.1.24",
+    "@types/redux": "^3.6.0",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
     "axios": "^0.27.2",
+    "eslint-plugin-jest": "^26.4.5",
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "husky": "^8.0.1",
+    "prettier": "^2.6.2",
+    "prettier-eslint": "^15.0.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-loading": "^2.0.3",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "5.0.1",
     "recharts": "^2.1.10",
-    "redux-thunk": "^2.4.1",
-    "typescript": "^4.6.4",
+    "redux": "^4.2.0",
+    "typescript": "^4.7.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "lint": "eslint src/**/*.{ts,tsx}",
-    "lint:fix": "eslint src/**/*.{ts,tsx} --fix",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\""
+    "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
+    "lint:fix": "eslint --fix --ext .js,.jsx .",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -50,12 +61,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.26.0",
-    "@typescript-eslint/parser": "^5.26.0",
-    "eslint": "^8.16.0",
-    "eslint-plugin-react": "^7.30.0",
-    "prettier": "2.6.2"
   }
 }
