@@ -9,14 +9,14 @@ export default function useConfigureData() {
     const dataStore = useSelector(s => s as IRootState).dataStore;
     const { filter: { camp, country, school }, data } = dataStore;
 
-    const [colors, setColors] = useState(generateUniqueColors(data?.length || 0));
     const [activeSchools, setActiveSchools] = useState([]);
     const [drawableData, setDrawableData] = useState<IMonthlyLessonsCount[]>([]);
+    const [colors, setColors] = useState(generateUniqueColors(data?.length || 0));
     const [mapSchoolToLessons, setMapSchoolToLessons] = useState<Partial<IData>[]>([]);
 
     const generateChartData = useCallback(() => {
         if (!data) return;
-
+        
         const {
             schoolLessonsArr,
             monthlyLessonsArr,
@@ -32,7 +32,7 @@ export default function useConfigureData() {
     }, [data, camp, country, school]);
 
     useEffect(() => { generateChartData(); }, [data, camp, country, school]);
-    useEffect(() => { setColors(generateUniqueColors(data.length)); }, [data]);
+    useEffect(() => { setColors(generateUniqueColors(data.length)); }, [data, country, camp]);
 
     return {
         colors,

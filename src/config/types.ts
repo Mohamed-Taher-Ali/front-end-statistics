@@ -8,11 +8,13 @@ export interface OptionalChildrenProps {
     children?: ReactElement;
 }
 
-interface IDataFilterable {
-    camp: string;
-    school:  string;
-    country: string;
+export interface IDataFilterableBase<T> {
+    camp: T;
+    school:  T;
+    country: T;
 }
+
+type IDataFilterable = IDataFilterableBase<string>;
 
 export interface IData extends IDataFilterable {
     id: string;
@@ -20,8 +22,7 @@ export interface IData extends IDataFilterable {
     lessons: number;
 }
 
-export interface IDataFilter extends Partial<IDataFilterable> {
-}
+export type IDataFilter = Partial<IDataFilterable>
 
 export interface IMonthlyLessonsCount {
     [key: string]: number | string;
@@ -30,7 +31,7 @@ export interface IMonthlyLessonsCount {
 
 export type IMapStringNumber = Record<string, number>;
 
-type Full<T> = {
+export type Full<T> = {
     [P in keyof T]-?: T[P];
 }
 

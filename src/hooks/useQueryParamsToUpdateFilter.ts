@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 import { updateFilter } from 'src/store/slices/data';
+import { useSearchParams } from 'react-router-dom';
 import { IRootState } from 'src/store/types';
 
 
 export default function useQueryParamsToUpdateFilter() {
-    const [searchParams, setSearchParams] = useSearchParams();
+    // const [searchParams, setSearchParams] = useSearchParams();
+    const setSearchParams = useSearchParams()[1];
     const params = new URLSearchParams(window.location.search);
     const [activeSchools, setActiveSchools] = useState<string[]>([]);
     const state = useSelector(s => s as IRootState)
@@ -14,13 +15,13 @@ export default function useQueryParamsToUpdateFilter() {
     
     
     useEffect(() => {
-        const activeSchools = params.get('activeSchools')?.split(',') || [];
-        const country = params.get('country') || '';
-        const school = params.get('school') || '';
-        const camp = params.get('camp') || '';
+        const activeSchoolsParam = params.get('activeSchools')?.split(',') || [];
+        const country = params.get('country') || state.dataStore.filter.country || '';
+        const school = params.get('school') || state.dataStore.filter.school || '';
+        const camp = params.get('camp') || state.dataStore.filter.camp || '';
 
         dispatch(updateFilter({ camp, country, school }));
-        setActiveSchools(activeSchools);
+        setActiveSchools(activeSchoolsParam);
     }, []);
 
 

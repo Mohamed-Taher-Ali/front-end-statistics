@@ -41,8 +41,13 @@ const dataSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchData.fulfilled, (state, action) => {
-            if (!state.data.length)
+            if (!state.data.length){
                 state.data.push(...action.payload)
+                const countries = [...new Set(state.data.map(d=>d.country))];
+                const camps = [...new Set(state.data.map(d=>d.camp))];
+                state.filter.country = countries[0];
+                state.filter.camp = camps[0];
+            }
         });
     },
 });

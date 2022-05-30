@@ -9,10 +9,9 @@ export const CustomTooltip = ({
 }: CustomTooltipProps<IPointReturn<IMonthlyLessonsCount>>) => {
     if (!(active && payload && payload.length && point)) return <div></div>;
 
-    const {payload: {_, ...schools}} = payload[0] as any;
-    const sum = Object.values(schools as number[]).reduce((ac, el) => ac + el, 0)
+    const {payload: p} = payload[0];
+    const sum = Object.values(p).reduce((ac, el) => ac + (isNaN(el)?0:el), 0)
 
-    
     const lessonsNum = point.payload
         ? +point.payload[point.dataKey as keyof IMonthlyLessonsCount]
         : 0;

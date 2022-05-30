@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useQueryParamsToUpdateFilter from 'src/hooks/useQueryParamsToUpdateFilter';
 import useDropDownData, { showAllLabelEnum } from 'src/hooks/useDropDownData';
+import { DropDownItemProps } from 'src/components/DropDown/types';
 import useConfigureData from 'src/hooks/useConfigureData';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFilter } from 'src/store/slices/data';
@@ -11,7 +12,6 @@ import { Bullet } from 'src/components/Bullet';
 import { IDataFilter } from 'src/config/types';
 import MyChart from 'src/components/MyChart';
 import { IRootState } from 'src/store/types';
-import { DropDownItemProps } from 'src/components/DropDown/types';
 
 
 export default function MainPaige() {
@@ -19,9 +19,9 @@ export default function MainPaige() {
     const dispatch = useDispatch();
     const state = useSelector(s => s as IRootState);
     const { createDropDownData } = useDropDownData();
+    const [schoolDDSelectedValue, setSchoolDDSelectedValue] = useState('');
     const { drawableData, mapSchoolToLessons, colors } = useConfigureData();
     const [schoolDDData, setSchoolDDData] = useState<DropDownItemProps[]>([]);
-    const [schoolDDSelectedValue, setSchoolDDSelectedValue] = useState(state.dataStore.filter['school']);
     const { setSearchParams, activeSchools, setActiveSchools, getQueryParam } = useQueryParamsToUpdateFilter();
 
 
@@ -38,39 +38,41 @@ export default function MainPaige() {
 
     const onSelectDD = (name: string, item: DropDownItemProps) => {
         const n = name as keyof IDataFilter;
-        const updated = { 
-            [name]: item.value !== showAllLabelEnum.SHOW_ALL ? item.value : '',
-            ...(n !== 'school' && {school: ''}),
+
+        const updated = {
+            ...state.dataStore.filter,
+            [name]: item.value !== showAllLabelEnum.SHOW_ALL? item.value : '',
+            ...(n !== 'school' && { school: '' }),
         };
 
+        setActiveSchools([]);
         dispatch(updateFilter(updated));
         setSearchParams(
-            {
-                ...state.dataStore.filter,
-                ...updated,
-                activeSchools: activeSchools.join(','),
-            },
+            { ...updated, activeSchools: '' },
             { replace: true }
         );
     }
 
-    useEffect(() => {
-        setSchoolDDData(
-            createDropDownData(
-                'school',
+    useEffect(
+        () => {
+            setSchoolDDData(
+                createDropDownData(
+                    'school',
+                    showAllLabelEnum.SHOW_ALL
+                )
+            );
+
+            setSchoolDDSelectedValue(
+                getQueryParam('school') ||
+                state.dataStore.filter.school ||
                 showAllLabelEnum.SHOW_ALL
-            )
-        );
-        setSchoolDDSelectedValue(
-            getQueryParam('school') ||
-            state.dataStore.filter.school ||
-            showAllLabelEnum.SHOW_ALL
-        )
-    },
-    [
-        state.dataStore.filter.country,
-        state.dataStore.filter.camp
-    ]);
+            );
+        },
+        [
+            state.dataStore.filter.country,
+            state.dataStore.filter.camp
+        ]
+    );
 
 
     return (
@@ -90,6 +92,7 @@ export default function MainPaige() {
                                 name: 'school',
                             }
                         ]}
+
                         titleColor={state.colorMode.currentMode.fontColor}
                         onSelect={(name: string, item) => {
                             setSchoolDDSelectedValue(item.value);
@@ -111,6 +114,7 @@ export default function MainPaige() {
                             activeSchools={activeSchools}
                             onPointClick={(item) => {
                                 const { camp, country } = state.dataStore.filter;
+                                if (!(item.dataKey && camp && country && item.payload.month)) return;
                                 navigate(`/details/${item.dataKey}/${camp}/${country}/${item.payload.month}`);
                             }}
                         />
@@ -124,8 +128,11 @@ export default function MainPaige() {
                         <div>
                             <ListItem
                                 data={{
-                                    school: "all schools",
-                                    lessons: mapSchoolToLessons.reduce((ac, el) => ac + (el.lessons || 0), 0)
+                                    school: state.dataStore.filter.camp,
+                                    lessons: state.dataStore.data.filter(d =>
+                                        d.camp === state.dataStore.filter.camp &&
+                                        d.country === state.dataStore.filter.country
+                                    ).reduce((ac, el) => ac + (el.lessons || 0), 0),
                                 }}
                             />
                         </div>
@@ -150,10 +157,20 @@ export default function MainPaige() {
                                                 : undefined
                                         }
                                         onClick={(item) => {
-                                            setActiveSchools(
-                                                activeSchools.includes(item.school as string)
+                                            const updated = {
+                                                activeSchools: activeSchools.includes(item.school as string)
                                                     ? activeSchools.filter(a => a !== item.school)
                                                     : [...activeSchools, item.school as string]
+                                            };
+                                            setActiveSchools(updated.activeSchools);
+
+                                            setSearchParams(
+                                                {
+                                                    ...state.dataStore.filter,
+                                                    ...updated,
+                                                    activeSchools: updated.activeSchools.join(','),
+                                                },
+                                                { replace: true }
                                             );
                                         }}
                                     />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLightDarkMode } from '../../hooks/useLightDarkMode';
+import { useLightDarkMode } from 'src/hooks/useLightDarkMode';
 
 
 export function LightDarkMode() {

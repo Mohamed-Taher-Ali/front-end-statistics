@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { updateColorMode } from '../store/slices/colorMode';
+import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from 'src/store/types';
 
 export function useLightDarkMode() {

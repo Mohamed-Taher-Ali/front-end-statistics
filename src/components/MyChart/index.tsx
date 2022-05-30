@@ -4,7 +4,7 @@ import { IRootState } from 'src/store/types';
 import { CustomTooltip } from './CustomTooltip';
 import { IData, IMonthlyLessonsCount } from 'src/config/types';
 import { IPointReturn, MyChartCallbackTypes, MyChartProps } from './types';
-import { CartesianGrid, Line, LineChart, Tooltip, DotProps, XAxis } from 'recharts';
+import { CartesianGrid, Line, LineChart, Tooltip, DotProps, XAxis, YAxis } from 'recharts';
 
 
 export default function MyChart({
@@ -33,16 +33,28 @@ export default function MyChart({
 
     return (
         <LineChart
-            width={800}
+            width={900}
             height={500}
             data={drawableData}
-            margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+            margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
             style={{ backgroundColor: state.colorMode.currentMode.secondaryColor }}
         >
-            <XAxis dataKey="month" color={state.colorMode.currentMode.fontColor} />
+
+            <YAxis
+            type="number"
+            yAxisId="left"
+            stroke='transparent'
+            domain={[0, 'auto']}
+            interval="preserveStartEnd"
+            tickLine={{ stroke: 'transparent' }}
+            tick={{ fill: state.colorMode.currentMode.fontColor }}
+            />
+
+            <XAxis dataKey="month" stroke={state.colorMode.currentMode.fontColor} />
             <CartesianGrid vertical={false} stroke={state.colorMode.currentMode.fontColor} />
             <Tooltip
-                wrapperStyle={{ display: Object.keys(hoveredPoint).length ? 'block' : 'none' }}
+            active={true}
+                wrapperStyle={{ display: Object.keys(hoveredPoint).length ? 'block' : 'none', color: 'red' }}
                 content={<CustomTooltip point={hoveredPoint as IPointReturn<IMonthlyLessonsCount>} />}
             />
             {
@@ -56,9 +68,9 @@ export default function MyChart({
                                 ...duplicatedEvents,
                                 strokeWidth: hoveredPoint.dataKey !== item.school ? 4 : 0,
                             }}
-                            display={activeSchools.includes(item.school!) ? 'block' : 'none'}
-                            yAxisId={ind}
-                            strokeWidth={2}
+                            display={activeSchools.includes(item.school as string) ? 'block' : 'none'}
+                            yAxisId="left"
+                            strokeWidth={3}
                             type="monotone"
                             stroke={colors[ind]}
                             dataKey={item.school}

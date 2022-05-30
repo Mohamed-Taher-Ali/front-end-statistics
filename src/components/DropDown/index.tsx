@@ -12,8 +12,8 @@ export function DropDown<T extends DropDownItemProps>({
     items.find(i=>i.value === selectedValue)?.value
   );
 
-  const onClickHandler = (value: string) => {
-    const item = items.find(i => i.value === value);
+  const onClickHandler = (val: string) => {
+    const item = items.find(i => i.value === val);
     onSelect && item && onSelect(item);
   }
 

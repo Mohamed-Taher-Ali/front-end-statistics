@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { IData } from 'src/config/types';
 import { IRootState } from 'src/store/types';
+import { useParams } from 'react-router-dom';
 
 export default function DetailsPage() {
     const { school, month, camp, country } = useParams();

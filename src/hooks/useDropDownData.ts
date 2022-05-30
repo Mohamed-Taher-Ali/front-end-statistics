@@ -1,7 +1,6 @@
 import { IDataFilter } from 'src/config/types';
 import { IRootState } from 'src/store/types';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateFilter } from 'src/store/slices/data';
+import { useSelector } from 'react-redux';
 
 export enum showAllLabelEnum {
     SHOW_ALL = 'show all',
@@ -10,7 +9,6 @@ export enum showAllLabelEnum {
 
 export default function useDropDownData() {
     const { dataStore: { filter, data } } = useSelector(s => s as IRootState);
-    const dispatch = useDispatch();
 
     const createDropDownData = (
         key: keyof IDataFilter,
@@ -29,7 +27,6 @@ export default function useDropDownData() {
         const ret = [...new Set(filteredData)];
 
         if (showAllLabel === showAllLabelEnum.SHOW_ALL) ret.unshift(showAllLabel);
-        else if (!filter[key]) dispatch(updateFilter({ [key]: ret[0] }));
 
         return ret.map((value, id) => ({ id, value }))
     }
