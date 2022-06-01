@@ -8,5 +8,10 @@ module.exports = {
         'src/(.*)$': '<rootDir>/src/$1',
         "\\.(css|sass)$": "identity-obj-proxy",
     },
+    presets: [
+        'next/babel',
+        ['@babel/preset-env', {targets: {node: 'current'}}],
+        '@babel/preset-typescript'
+      ]
   }
   
