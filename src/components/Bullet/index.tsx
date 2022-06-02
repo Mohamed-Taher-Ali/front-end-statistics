@@ -19,7 +19,7 @@ export function Bullet ({
     inner: {
       width: `${size}px`,
       height: `${size}px`,
-      backgroundColor: `${currentColor}`,
+      backgroundColor: currentColor,
       borderRadius: '50%',
       margin: '5px',
     }
