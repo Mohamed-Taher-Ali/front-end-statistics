@@ -20,15 +20,10 @@ describe('test list item', () => {
       school: 'mubarak'
     },
     color = '#454545',
-    icon = <Bullet />,
-    onClick = (item: IData) => {
-      for(const [key, val] of Object.entries(item))
-        expect(val).toBe(data[key as keyof IData]);
-    };
+    icon = <Bullet />
 
   const props: ListItemProps<IData> = {
     data,
-    onClick,
     color,
     icon,
   };
@@ -36,7 +31,13 @@ describe('test list item', () => {
   test("on click should generate correct data", async () => {
     const { container } = render(
       <MyStore>
-        <ListItem {...props} />
+        <ListItem {...{
+          ...props,
+          onClick: (item: IData) => {
+            for(const [key, val] of Object.entries(item))
+              expect(val).toBe(data[key as keyof IData]);
+          }
+        }} />
       </MyStore>
     );
 
