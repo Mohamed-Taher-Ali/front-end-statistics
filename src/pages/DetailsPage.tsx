@@ -5,15 +5,9 @@ import { IRootState } from 'src/store/types';
 import { useParams } from 'react-router-dom';
 
 export default function DetailsPage() {
-    const { school, month, camp, country } = useParams();
+    const { id } = useParams();
     const state = useSelector(s => s as IRootState);
-
-    const data = state.dataStore.data.find(d =>
-        d.country === country &&
-        d.school === school &&
-        d.month === month &&
-        d.camp === camp
-    );
+    const data = state.dataStore.data.find(d =>d.id === id);
 
     return (
         <div className='page-cont'>

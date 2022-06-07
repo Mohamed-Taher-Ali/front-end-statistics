@@ -10,7 +10,7 @@ const pages = [
     },
     {
         element: lazy(() => import('src/pages/DetailsPage')),
-        path: '/details/:school/:camp/:country/:month'
+        path: '/details/:id'
     },
     {   // must be at end
         element: lazy(() => import('src/pages/NotFound')),
