@@ -113,8 +113,6 @@ export default function MainPaige() {
                             schools={mapSchoolToLessons}
                             activeSchools={activeSchools}
                             onPointClick={(item) => {
-                                console.log({item});
-                                
                                 const { camp, country } = state.dataStore.filter;
                                 if (!(item.dataKey && camp && country && item.payload.month)) return;
 
