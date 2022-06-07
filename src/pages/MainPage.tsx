@@ -41,7 +41,7 @@ export default function MainPaige() {
 
         const updated = {
             ...state.dataStore.filter,
-            [name]: item.value !== showAllLabelEnum.SHOW_ALL? item.value : '',
+            [name]: item.value !== showAllLabelEnum.SHOW_ALL ? item.value : '',
             ...(n !== 'school' && { school: '' }),
         };
 
@@ -66,7 +66,7 @@ export default function MainPaige() {
                 getQueryParam('school') ||
                 state.dataStore.filter.school ||
                 showAllLabelEnum.SHOW_ALL
-            ); 
+            );
         },// eslint-disable-next-line
         [
             state.dataStore.filter.country,
@@ -116,12 +116,12 @@ export default function MainPaige() {
                                 const { camp, country } = state.dataStore.filter;
                                 if (!(item.dataKey && camp && country && item.payload.month)) return;
 
-                                const id = state.dataStore.data.find(d => 
-                                    d.country === country &&
+                                const id = state.dataStore.data.find(d =>
                                     d.month === item.payload.month &&
-                                    d.camp === camp &&
-                                    d.school === item.dataKey
-                                    )?.id;
+                                    d.school === item.dataKey &&
+                                    d.country === country &&
+                                    d.camp === camp
+                                )?.id;
 
                                 navigate(`/details/${id}`);
                             }}
